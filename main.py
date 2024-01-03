@@ -5,6 +5,7 @@ import calendar
 import os
 import time
 
+# pip3 install opencv-python
 # Rust is good for command line tools
 # Automating sending reset sequences.
 init(autoreset=True)
@@ -69,18 +70,31 @@ while True:
             print("No tasks have be created!")
         else:
             print(tasks)
-    elif command == "focus" or command == "f":
+    elif command == "focus" or command == "f":   
         file_names = ['ascii/t0.txt', 'ascii/t1.txt', 'ascii/t2.txt', 'ascii/t3.txt', 'ascii/t4.txt', 'ascii/t5.txt', 'ascii/t6.txt']
-        for file_name in file_names:
-            with open(file_name, 'r') as file:
-                frame = file.read()
-                print(frame, end='\r') # Carriage return
-                time.sleep(1) # Animation delay
+      
+        first_time = time.time()
+        last_time = first_time
+        try:
+            while True:   
+                for file_name in file_names:
+                    new_time = time.time()
+                    last_time = new_time
+                    with open(file_name, 'r') as file:
+                        frame = file.read()
+                        print(frame, end='\r') # Carriage return
+                        time.sleep(1) # Animation delay
+        except KeyboardInterrupt:
+            pass
         os.system("reset")
         with open(file_names[-1], 'r') as file:
             frame = file.read()
-            print(frame, end='\r') # Carriage retu
-        print("Minutes elapsed: ")
+            print(frame, end='\r')
+        duration = new_time - first_time
+        if duration < 60:
+            print("Time elapsed: ", round(duration, 2), "seconds")
+        else:
+            print("Time elapsed: ", round(duration, 2)/60, "minutes")
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
         print(cal)
