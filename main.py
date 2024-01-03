@@ -77,7 +77,7 @@ while True:
         import time
 
         # List the file names in the correct order
-        file_names = ['t0.txt', 't1.txt', 't2.txt', 't3.txt', 't4.txt', 't5.txt', 't6.txt']
+        file_names = ['ascii/t0.txt', 'ascii/t1.txt', 'ascii/t2.txt', 'ascii/t3.txt', 'ascii/t4.txt', 'ascii/t5.txt', 'ascii/t6.txt']
 
         # Function to clear the terminal screen
         def clear_screen():
