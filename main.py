@@ -87,7 +87,7 @@ while True:
         except KeyboardInterrupt:
             pass
         os.system("reset")
-        with open(file_names[-1], 'r') as file:
+        with open(file_name, 'r') as file:
             frame = file.read()
             print(frame, end='\r')
         duration = new_time - first_time
