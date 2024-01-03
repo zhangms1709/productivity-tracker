@@ -2,8 +2,8 @@ from colorama import init, Fore, Style, Back
 from datetime import *
 from dateutil.tz import *
 import calendar
-import os 
 
+# Rust is good for command line tools
 # Automating sending reset sequences.
 init(autoreset=True)
 
@@ -15,10 +15,10 @@ colored_day = '\033[92m' + str(curr_day) + '\033[0m'
 orgcal = cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
 print(cal)
 
-print(Fore.RED + 'some red text')
-print(Style.DIM + 'and in dim text')
-print(Style.NORMAL + 'and in dim text')
-print(Style.BRIGHT + 'and in dim text')
+# print(Fore.RED + 'some red text')
+# print(Style.DIM + 'and in dim text')
+# print(Style.NORMAL + 'and in dim text')
+# print(Style.BRIGHT + 'and in dim text')
 
 tasks = []
 
@@ -69,9 +69,28 @@ while True:
             print(tasks)
     elif command == "focus" or command == "f":
         # jp2a tree.jpeg --invert --colors
-        with open('tree.txt', 'r') as f:
-            for line in f:
-                print(line.rstrip())
+        # with open('t0.txt', 'r') as f:
+        #     for line in f:
+        #         print(line.rstrip())
+
+        import os
+        import time
+
+        # List the file names in the correct order
+        file_names = ['t0.txt', 't1.txt', 't2.txt', 't3.txt', 't4.txt', 't5.txt', 't6.txt']
+
+        # Function to clear the terminal screen
+        def clear_screen():
+            os.system('reset')
+            #os.system('cls||clear')
+
+        # Loop through each file and print its contents
+        for file_name in file_names:
+            # clear_screen()  # Clear the screen before printing the next frame
+            with open(file_name, 'r') as file:
+                frame = file.read()
+                print(frame, end='\r') # carriage returns
+                time.sleep(1)  # Adjust the delay as needed
         print("Minutes elapsed: ")
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
