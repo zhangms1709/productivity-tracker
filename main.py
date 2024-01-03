@@ -1,13 +1,13 @@
+import calendar
 from colorama import init, Fore, Style, Back
 from datetime import *
 from dateutil.tz import *
-import calendar
 import os
-import time
-from rich.tree import Tree
+from random import randint
 import rich
 from rich.highlighter import Highlighter
-from random import randint
+from rich.tree import Tree
+import time
 
 class RainbowHighlighter(Highlighter):
     def highlight(self, text):
@@ -134,6 +134,6 @@ while True:
             file.write(content)
             file.close()
     elif command == 'help' or command == 'h':
-        print("View README for detailled usage instructions!")
+        rich.print(rainbow("View README for detailled usage instructions!"))
     else:
         print("Invalid command")
