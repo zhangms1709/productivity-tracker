@@ -3,14 +3,18 @@ from datetime import *
 from dateutil.tz import *
 import calendar
 
-input_date = datetime.now(tzlocal())
-print("Hello! The time is", input_date)
-print(calendar.month(input_date.year, input_date.month))
-# Automating sending reset sequences
+# Automating sending reset sequences.
 init(autoreset=True)
 
+# Fetch current time.
+input_date = datetime.now(tzlocal())
+print("Hello! The time is", input_date)
+curr_day = input_date.day
+colored_day = '\033[92m' + str(curr_day) + '\033[0m'
+cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
+print(cal)
+
 print(Fore.RED + 'some red text')
-print('automatically back to default color again')
 print(Style.DIM + 'and in dim text')
 print(Style.NORMAL + 'and in dim text')
 print(Style.BRIGHT + 'and in dim text')
@@ -64,6 +68,11 @@ while True:
             print(tasks)
     elif command == "focus" or command == "f":
         print()
+    elif command == "day" or command == "d":
+        day = input("Enter day to highlight: ")
+        colored_day = '\033[92m' + str(day) + '\033[0m'
+        cal = cal.replace(str(day), colored_day, 1)
+        print(cal)
     elif command == 'exit' or command == 'e':
         break
     elif command == 'save' or command == 's':
