@@ -2,6 +2,7 @@ from colorama import init, Fore, Style, Back
 from datetime import *
 from dateutil.tz import *
 import calendar
+import os 
 
 # Automating sending reset sequences.
 init(autoreset=True)
@@ -67,7 +68,11 @@ while True:
         else:
             print(tasks)
     elif command == "focus" or command == "f":
-        print("minutes elapsed: ")
+        # jp2a tree.jpeg --invert --colors
+        with open('tree.txt', 'r') as f:
+            for line in f:
+                print(line.rstrip())
+        print("Minutes elapsed: ")
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
         print(cal)
