@@ -4,8 +4,23 @@ from dateutil.tz import *
 import calendar
 import os
 import time
+from rich.tree import Tree
+import rich
+from rich.highlighter import Highlighter
+from random import randint
 
-# pip3 install opencv-python
+class RainbowHighlighter(Highlighter):
+    def highlight(self, text):
+        for index in range(len(text)):
+            text.stylize(f"color({randint(16, 255)})", index, index + 1)
+rainbow = RainbowHighlighter()
+# rich.print(rainbow("I must not fear. Fear is the mind-killer."))
+
+tree = Tree("Task Tracker", guide_style="bright_blue")
+tree.add("foo")
+tree.add("bar")
+# rich.print(tree)
+
 # Rust is good for command line tools
 # Automating sending reset sequences.
 init(autoreset=True)
@@ -14,7 +29,7 @@ init(autoreset=True)
 input_date = datetime.now(tzlocal())
 print("Hello! The time is", input_date)
 curr_day = input_date.day
-colored_day = '\033[92m' + str(curr_day) + '\033[0m'
+colored_day = str(curr_day) #'\033[92m' + str(curr_day) + '\033[0m'
 orgcal = cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
 print(cal)
 
