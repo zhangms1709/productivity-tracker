@@ -11,7 +11,7 @@ input_date = datetime.now(tzlocal())
 print("Hello! The time is", input_date)
 curr_day = input_date.day
 colored_day = '\033[92m' + str(curr_day) + '\033[0m'
-cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
+orgcal = cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
 print(cal)
 
 print(Fore.RED + 'some red text')
@@ -67,12 +67,18 @@ while True:
         else:
             print(tasks)
     elif command == "focus" or command == "f":
-        print()
+        print("minutes elapsed: ")
+    elif command == "reset_cal" or command == "rc":
+        cal = orgcal
+        print(cal)
     elif command == "day" or command == "d":
         day = input("Enter day to highlight: ")
-        colored_day = '\033[92m' + str(day) + '\033[0m'
-        cal = cal.replace(str(day), colored_day, 1)
-        print(cal)
+        if 0 < day <= 31:
+            colored_day = '\033[92m' + str(day) + '\033[0m'
+            cal = cal.replace(str(day), colored_day, 1)
+            print(cal)
+        else:
+            print("Invalid day!")
     elif command == 'exit' or command == 'e':
         break
     elif command == 'save' or command == 's':
