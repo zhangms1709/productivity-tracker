@@ -1,5 +1,10 @@
 from colorama import init, Fore, Style, Back
-
+from dateutil.utils import today
+from datetime import *
+from dateutil.tz import *
+# pip3 freeze > requirements.txt
+print(today(tzinfo=tzlocal()))
+print(datetime.now(tzlocal()))
 # Automating sending reset sequences
 init(autoreset=True)
 
