@@ -2,6 +2,8 @@ from colorama import init, Fore, Style, Back
 from datetime import *
 from dateutil.tz import *
 import calendar
+import os
+import time
 
 # Rust is good for command line tools
 # Automating sending reset sequences.
@@ -68,29 +70,16 @@ while True:
         else:
             print(tasks)
     elif command == "focus" or command == "f":
-        # jp2a tree.jpeg --invert --colors
-        # with open('t0.txt', 'r') as f:
-        #     for line in f:
-        #         print(line.rstrip())
-
-        import os
-        import time
-
-        # List the file names in the correct order
         file_names = ['ascii/t0.txt', 'ascii/t1.txt', 'ascii/t2.txt', 'ascii/t3.txt', 'ascii/t4.txt', 'ascii/t5.txt', 'ascii/t6.txt']
-
-        # Function to clear the terminal screen
-        def clear_screen():
-            os.system('reset')
-            #os.system('cls||clear')
-
-        # Loop through each file and print its contents
         for file_name in file_names:
-            # clear_screen()  # Clear the screen before printing the next frame
             with open(file_name, 'r') as file:
                 frame = file.read()
-                print(frame, end='\r') # carriage returns
-                time.sleep(1)  # Adjust the delay as needed
+                print(frame, end='\r') # Carriage return
+                time.sleep(1) # Animation delay
+        os.system("reset")
+        with open(file_names[-1], 'r') as file:
+            frame = file.read()
+            print(frame, end='\r') # Carriage retu
         print("Minutes elapsed: ")
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
