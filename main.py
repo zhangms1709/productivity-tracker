@@ -1,3 +1,14 @@
+from colorama import init, Fore, Style, Back
+
+# Automating sending reset sequences
+init(autoreset=True)
+
+print(Fore.RED + 'some red text')
+print('automatically back to default color again')
+print(Style.DIM + 'and in dim text')
+print(Style.NORMAL + 'and in dim text')
+print(Style.BRIGHT + 'and in dim text')
+
 tasks = []
 
 def create_task(title, description, priority):
@@ -6,7 +17,7 @@ def create_task(title, description, priority):
         'description': description,
         'priority': priority,
         'status': 'In Progress'
-    }) # create sub tasks w tree structure?
+    }) # create sub tasks w tree structure? Use colorama and argparse?
 
 def mark_task_as_finished(task_index):
     if 0 <= task_index < len(tasks):
