@@ -130,6 +130,7 @@ while True:
             print("Time elapsed: ", round(duration, 2), "seconds")
         else:
             print("Time elapsed: ", round(duration, 2)/60, "minutes")
+        points += (duration/10)
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
         reg = cal
@@ -137,9 +138,6 @@ while True:
     elif command == "day" or command == "d":
         day = input("Enter day to highlight: ")
         if 0 < int(day) <= 31:
-            # colored_day = '\033[92m' + str(day) + '\033[0m'
-            # cal = cal.replace(str(day), colored_day, 1)
-            # print(cal)
             date_new  = day.rjust(2)
             rday  = ('\\b' + date_new + '\\b').replace('\\b ', '\\s')
             rdayc = "\033[7m" + date_new + "\033[0m"
@@ -149,7 +147,7 @@ while True:
             print("Invalid day!")
     elif command == 'exit' or command == 'e':
         break
-    elif command == 'save' or command == 's':
+    elif command == 'save' or command == 's': # save calendar and points too
         if len(tasks) == 0:
             print("No tasks have be created!")
         else:
