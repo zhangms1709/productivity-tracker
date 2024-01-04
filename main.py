@@ -39,13 +39,15 @@ print(cal)
 # print(Style.BRIGHT + 'and in dim text')
 
 tasks = []
+archive = []
 
 def create_task(title, description, priority):
     tasks.append({
         'title': title,
         'description': description,
         'priority': priority,
-        'status': 'In Progress'
+        'status': 'In Progress',
+        'date-created': str(input_date.month) + "-" + str(input_date.day) + "-" + str(input_date.year)
     }) # create sub tasks w tree structure? Use colorama and argparse?
 
 def mark_task_as_finished(task_index):
@@ -80,6 +82,11 @@ while True:
             task_index = int(input("Enter task index to change priority: ")) # change 0 indexed to 1 indexed?
             new_priority = input("Enter new priority: ")
             change_priority(task_index, new_priority)
+    elif command == "archive" or command == "a":
+        task_index = int(input("Enter task index to remove: "))
+        archive.append(tasks[task_index])
+        tasks.pop(task_index)
+        print(archive)
     elif command == 'print' or command == "p":
         if len(tasks) == 0:
             print("No tasks have be created!")
@@ -133,7 +140,27 @@ while True:
             content = str(tasks)
             file.write(content)
             file.close()
+    elif command == 'load' or command == 'l':
+        name = input("Enter file to open (i.e. txt): ")
+        file = open(name, "r")
+        archive = list(set(archive + tasks))
+        tasks = eval(file.read())
     elif command == 'help' or command == 'h':
-        rich.print(rainbow("View README for detailled usage instructions!"))
+        print(""" 
+        List of commands:
+        ct - create task.
+        ft - mark task as finished.
+        cp - change priority of task.
+        rc - reset calendar/remove highlights.
+        a - archive a task.
+        p - print task list.
+        f - focus mode.
+        d - highlight a specific day.
+        e - exit.
+        s - save current task list.
+        l - load task list from text file, stores old task list in archive.
+        h - open help manual.
+        """)
+        # rich.print(rainbow("View README for detailled usage instructions!"))
     else:
         print("Invalid command")
