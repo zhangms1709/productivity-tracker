@@ -154,14 +154,19 @@ while True:
             print(tasks)
             filename = input("Enter save file name: ")
             file = open(filename+".txt", "w+")
-            content = str(tasks)
+            content = str(tasks) + "|" + str(points)
             file.write(content)
             file.close()
     elif command == 'load' or command == 'l':
         name = input("Enter file to open (i.e. txt): ")
         file = open(name, "r")
-        archive = list(set(archive + tasks))
-        tasks = eval(file.read())
+        f = file.read()
+        new = f.split("|")
+        points = new[1]
+        tasks = eval(new[0])
+        # archive = list(set(archive + tasks))
+        print(new)
+        print(points)
     elif command == 'help' or command == 'h':
         print(""" 
         List of commands:
