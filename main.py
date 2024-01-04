@@ -36,7 +36,8 @@ orgcal = cal = calendar.month(input_date.year, input_date.month)
 date_new  = input_date.day.__str__().rjust(2)
 rday  = ('\\b' + date_new + '\\b').replace('\\b ', '\\s')
 rdayc = "\033[7m" + date_new + "\033[0m"
-print(re.sub(rday,rdayc,cal))
+reg = re.sub(rday,rdayc,cal)
+print(reg)
 
 # print(Fore.RED + 'some red text')
 # print(Style.DIM + 'and in dim text')
@@ -131,13 +132,19 @@ while True:
             print("Time elapsed: ", round(duration, 2)/60, "minutes")
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
+        reg = cal
         print(cal)
     elif command == "day" or command == "d":
         day = input("Enter day to highlight: ")
-        if 0 < day <= 31:
-            colored_day = '\033[92m' + str(day) + '\033[0m'
-            cal = cal.replace(str(day), colored_day, 1)
-            print(cal)
+        if 0 < int(day) <= 31:
+            # colored_day = '\033[92m' + str(day) + '\033[0m'
+            # cal = cal.replace(str(day), colored_day, 1)
+            # print(cal)
+            date_new  = day.rjust(2)
+            rday  = ('\\b' + date_new + '\\b').replace('\\b ', '\\s')
+            rdayc = "\033[7m" + date_new + "\033[0m"
+            print(re.sub(rday,rdayc,reg))
+            reg = re.sub(rday,rdayc,reg)
         else:
             print("Invalid day!")
     elif command == 'exit' or command == 'e':
