@@ -8,6 +8,7 @@ import rich
 from rich.highlighter import Highlighter
 from rich.tree import Tree
 import time
+import re
 
 class RainbowHighlighter(Highlighter):
     def highlight(self, text):
@@ -24,14 +25,18 @@ tree.add("bar")
 # Rust is good for command line tools
 # Automating sending reset sequences.
 init(autoreset=True)
-
+points = 0
 # Fetch current time.
 input_date = datetime.now(tzlocal())
 print("Hello! The time is", input_date)
+print("points: ", points)
 curr_day = input_date.day
-colored_day = str(curr_day) #'\033[92m' + str(curr_day) + '\033[0m'
-orgcal = cal = calendar.month(input_date.year, input_date.month).replace(str(curr_day), colored_day, 1)
-print(cal)
+colored_day = '\033[92m' + str(curr_day) + '\033[0m'
+orgcal = cal = calendar.month(input_date.year, input_date.month)
+date_new  = input_date.day.__str__().rjust(2)
+rday  = ('\\b' + date_new + '\\b').replace('\\b ', '\\s')
+rdayc = "\033[7m" + date_new + "\033[0m"
+print(re.sub(rday,rdayc,cal))
 
 # print(Fore.RED + 'some red text')
 # print(Style.DIM + 'and in dim text')
@@ -64,11 +69,18 @@ def change_priority(task_index, new_priority):
 
 while True:
     command = input("Enter command (ct, ft, cp): ")
-    if command == 'ct':
-        title = input("Enter task title: ")
-        description = input("Enter task description: ")
-        priority = input("Enter task priority: ")
-        create_task(title, description, priority)
+    if command[:2] == 'ct':
+        if len(command) > 2:
+            parts = command.split(" ")
+            if len(parts) == 3:
+                create_task(parts[1], None, parts[2])
+            else:
+                create_task(parts[1], parts[2], parts[3])
+        else:
+            title = input("Enter task title: ")
+            description = input("Enter task description: ")
+            priority = input("Enter task priority: ")
+            create_task(title, description, priority)
     elif command == 'ft':
         if len(tasks) == 0:
             print("No tasks have be created!")
@@ -149,12 +161,23 @@ while True:
         print(""" 
         List of commands:
         ct - create task.
+            positional arguments:
+            title - title of task
+            description (optional) - task details
+            priority - rank indicating task urgency
+            notes:
+            There are two ways to use this command.
+            Typing 'ct' will prompt for all 3 fields,
+            alternatively one line is possible: 'ct cook 1'.
         ft - mark task as finished.
         cp - change priority of task.
         rc - reset calendar/remove highlights.
         a - archive a task.
         p - print task list.
         f - focus mode.
+            notes:
+            CTRL+C to exit focus mode, gain points
+            at a rate of 1 point per 10 seconds.
         d - highlight a specific day.
         e - exit.
         s - save current task list.
