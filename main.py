@@ -101,6 +101,7 @@ while True:
         tasks.pop(task_index)
         print(archive)
     elif command == 'print' or command == "p":
+        print("points: ", points)
         if len(tasks) == 0:
             print("No tasks have be created!")
         else:
@@ -117,7 +118,7 @@ while True:
                     last_time = new_time
                     with open(file_name, 'r') as file:
                         frame = file.read()
-                        print(frame, end='\r') # Carriage return
+                        print(frame.center(os.get_terminal_size().columns), end='\r') # Carriage return
                         time.sleep(1) # Animation delay
         except KeyboardInterrupt:
             pass
@@ -130,7 +131,26 @@ while True:
             print("Time elapsed: ", round(duration, 2), "seconds")
         else:
             print("Time elapsed: ", round(duration, 2)/60, "minutes")
-        points += (duration/10)
+        points += round((duration/10),2)
+    elif command == "rank" or command == "r":
+        rank = "study peasant"
+        if points > 2:
+            rank = "study squire"
+        if points > 4:
+            rank = "study knight"
+        if points > 8:
+            rank = "study baron"
+        if points > 16:
+            rank = "study viscount"
+        if points > 32:
+            rank = "study marquis"
+        if points > 64:
+            rank = 'study duke'
+        if points > 128:
+            rank = "study prince"
+        if points > 256:
+            rank = "study KING"
+        print("Your current rank is:", rank)
     elif command == "reset_cal" or command == "rc":
         cal = orgcal
         reg = cal
@@ -182,6 +202,7 @@ while True:
         ft - mark task as finished.
         cp - change priority of task.
         rc - reset calendar/remove highlights.
+        r - check points ranking (magnitudes of 2)
         a - archive a task.
         p - print task list.
         f - focus mode.
