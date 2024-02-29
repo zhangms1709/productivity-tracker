@@ -18,9 +18,8 @@ rainbow = RainbowHighlighter()
 # rich.print(rainbow("I must not fear. Fear is the mind-killer."))
 
 tree = Tree("Task Tracker", guide_style="bright_blue")
-tree.add("foo")
-tree.add("bar")
-# rich.print(tree)
+tree.add("Fun task here")
+rich.print(tree)
 
 # Rust is good for command line tools
 # Automating sending reset sequences.
